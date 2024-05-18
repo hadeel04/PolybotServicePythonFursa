@@ -60,7 +60,7 @@ export TELEGRAM_TOKEN=your_telegram_bot_token_here
 ```bash
 ngrok config add-authtoken <your-authtoken>
 ```
-7.start ngrok by running the following command:
+7. start ngrok by running the following command:
 
 ```bash
 ngrok http 8443
@@ -70,3 +70,12 @@ ngrok http 8443
 ```bash
 export TELEGRAM_APP_URL=your_telegram_url_here
 ```
+## Usage
+
+1. Run the app.py file to start the Flask server and the Telegram bot:
+     
+```bash
+python app.py
+```
+2. Send an image to the Telegram bot, along with a caption specifying the desired filter.
+3. The bot will process the image and send back the filtered image.
