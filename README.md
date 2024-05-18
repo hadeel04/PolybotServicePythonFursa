@@ -30,7 +30,8 @@ This Telegram bot written in Python allows users to process images by applying v
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/image-processing-telegram-bot.git
+git clone https://github.com/hadeel04/PolybotServicePythonFursa
+```
 
 2.Navigate to the project directory:
 
