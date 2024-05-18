@@ -77,6 +77,10 @@ class QuoteBot(Bot):
 class ImageProcessingBot(Bot):
 
     def process_image(self, img_path, caption):
+        caption_parts = caption.split()
+        caption = caption_parts[0]
+        filter_args = caption_parts[1:]
+
         my_img = Img(img_path)
         if (caption == 'Contour'):
             my_img.contour()
@@ -89,12 +93,24 @@ class ImageProcessingBot(Bot):
         if (caption == 'Salt and pepper'):
             my_img.salt_n_pepper()
         if (caption == 'Concat'):
+            other_img_path = filter_args[0]
+            other_img = Img(other_img_path)
+            direction = filter_args[1] if len(filter_args) > 1 else 'horizontal'
+            my_img.concat(other_img, direction)
             my_img.concat(my_img)
 
         return my_img.save_img()
+
+    def greet_user(self, chat_id, first_name):
+        self.send_text(chat_id, f"Welcome {first_name}! I'm ready to process your images.")
+
     def handle_message(self, msg):
         logger.info(f'Incoming message: {msg}')
         chat_id = msg['chat']['id']
+        first_name = msg['chat']['first_name']
+
+        if 'text' in msg:
+            self.greet_user(chat_id, first_name)
 
         if self.is_current_msg_photo(msg):
             try:
@@ -102,9 +118,10 @@ class ImageProcessingBot(Bot):
                 caption = msg['caption'] if 'caption' in msg else None
 
                 if not caption:
-                    self.send_text(chat_id, "Please provide a caption with one of the following filters: 'Blur', 'Contour', 'Rotate', 'Segment', 'Salt and pepper', 'Concat'")
+                    self.send_text(chat_id,
+                                   "Please provide a caption with one of the following filters: 'Blur', 'Contour', 'Rotate', 'Segment', 'Salt and pepper', 'Concat'")
                     return
-                processed_img_path = self.process_image(img_path,caption)
+                processed_img_path = self.process_image(img_path, caption)
                 self.send_photo(chat_id, processed_img_path)
             except Exception as e:
                 logger.error(f"Error processing image: {e}")
