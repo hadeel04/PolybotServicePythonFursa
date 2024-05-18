@@ -1,5 +1,6 @@
 from pathlib import Path
 from matplotlib.image import imread, imsave
+import random
 
 
 def rgb2gray(rgb):
@@ -51,17 +52,77 @@ class Img:
             self.data[i] = res
 
     def rotate(self):
-        # TODO remove the `raise` below, and write your implementation
-        raise NotImplementedError()
+        height = len(self.data)
+        width = len(self.data[0])
+
+        rotated_data = [[0 for j in range(height)] for i in range(width)]
+
+        for i in range(height):
+            for j in range(width):
+                rotated_data[j][height - i - 1] = self.data[i][j]
+
+        self.data = rotated_data
 
     def salt_n_pepper(self):
-        # TODO remove the `raise` below, and write your implementation
-        raise NotImplementedError()
+        height = len(self.data)
+        width = len(self.data[0])
+
+        for i in range(height):
+            for j in range(width):
+                random_value = random.random()
+                if random_value < 0.2:
+                    self.data[i][j] = 255  # Salt (maximum intensity)
+                elif random_value > 0.8:
+                    self.data[i][j] = 0  # Pepper (minimum intensity)
 
     def concat(self, other_img, direction='horizontal'):
-        # TODO remove the `raise` below, and write your implementation
-        raise NotImplementedError()
+        if direction == 'horizontal':
+            if len(self.data) != len(other_img.data):
+                raise RuntimeError("Images have different heights, cannot concatenate horizontally.")
+
+            height = len(self.data)
+            width1 = len(self.data[0])
+            width2 = len(other_img.data[0])
+
+            concatenated_data = [[0 for j in range(width1 + width2)] for i in range(height)]
+
+            for i in range(height):
+                for j in range(width1):
+                    concatenated_data[i][j] = self.data[i][j]
+                for j in range(width2):
+                    concatenated_data[i][j + width1] = other_img.data[i][j]
+
+            self.data = concatenated_data
+
+        elif direction == 'vertical':
+            if len(self.data[0]) != len(other_img.data[0]):
+                raise RuntimeError("Images have different widths, cannot concatenate vertically.")
+
+            height1 = len(self.data)
+            height2 = len(other_img.data)
+            width = len(self.data[0])
+
+            concatenated_data = [[0 for j in range(width)] for i in range(height1 + height2)]
+
+            for i in range(height1):
+                for j in range(width):
+                    concatenated_data[i][j] = self.data[i][j]
+            for i in range(height2):
+                for j in range(width):
+                    concatenated_data[i + height1][j] = other_img.data[i][j]
+
+            self.data = concatenated_data
+
+        else:
+            raise ValueError("Invalid direction. Must be 'horizontal' or 'vertical'.")
 
     def segment(self):
-        # TODO remove the `raise` below, and write your implementation
-        raise NotImplementedError()
+        height = len(self.data)
+        width = len(self.data[0])
+
+        for i in range(height):
+            for j in range(width):
+                if self.data[i][j] > 100:
+                    self.data[i][j] = 255  # White pixel
+                else:
+                    self.data[i][j] = 0  # Black pixel

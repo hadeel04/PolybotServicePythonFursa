@@ -75,4 +75,38 @@ class QuoteBot(Bot):
 
 
 class ImageProcessingBot(Bot):
-    pass
+
+    def process_image(self, img_path, caption):
+        my_img = Img(img_path)
+        if (caption == 'Contour'):
+            my_img.contour()
+        if (caption == 'Blur'):
+            my_img.blur()
+        if (caption == 'Rotate'):
+            my_img.rotate()
+        if (caption == 'Segment'):
+            my_img.segment()
+        if (caption == 'Salt and pepper'):
+            my_img.salt_n_pepper()
+        if (caption == 'Concat'):
+            my_img.concat(my_img)
+        return my_img.save_img()
+    def handle_message(self, msg):
+        logger.info(f'Incoming message: {msg}')
+        chat_id = msg['chat']['id']
+
+        if self.is_current_msg_photo(msg):
+            try:
+                img_path = self.download_user_photo(msg)
+                caption = msg['caption'] if 'caption' in msg else None
+
+                if not caption:
+                    self.send_text(chat_id, "Please provide a caption with one of the following filters: 'Blur', 'Contour', 'Rotate', 'Segment', 'Salt and pepper', 'Concat'")
+                    return
+                processed_img_path = self.process_image(img_path,caption)
+                self.send_photo(chat_id, processed_img_path)
+            except Exception as e:
+                logger.error(f"Error processing image: {e}")
+                self.send_text(chat_id, "Something went wrong while processing the image. Please try again later.")
+        else:
+            self.send_text(chat_id, "Please send a photo to process.")
