@@ -90,6 +90,7 @@ class ImageProcessingBot(Bot):
             my_img.salt_n_pepper()
         if (caption == 'Concat'):
             my_img.concat(my_img)
+
         return my_img.save_img()
     def handle_message(self, msg):
         logger.info(f'Incoming message: {msg}')
