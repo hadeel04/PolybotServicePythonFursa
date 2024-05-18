@@ -93,6 +93,7 @@ class ImageProcessingBot(Bot):
         if (caption == 'Salt and pepper'):
             my_img.salt_n_pepper()
         if (caption == 'Concat'):
+
             other_img_path = filter_args[0]
             other_img = Img(other_img_path)
             direction = filter_args[1] if len(filter_args) > 1 else 'horizontal'
