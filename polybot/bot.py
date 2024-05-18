@@ -76,8 +76,8 @@ class QuoteBot(Bot):
 
 class ImageProcessingBot(Bot):
 
-#the function check the name of the filter and the arguments
-# and process the image acoording to the filter
+    #the function check the name of the filter and the arguments
+    # and process the image according to the filter
     def process_image(self, img_path, caption):
         caption_parts = caption.split()
         caption = caption_parts[0]
@@ -94,19 +94,20 @@ class ImageProcessingBot(Bot):
             my_img.segment()
         if (caption == 'Salt and pepper'):
             my_img.salt_n_pepper()
-#it wasnt obvoiuse how we will get the two photos also ownload_user_photo fun can
-#handle only one photo if i get it wright
+
+        #it wasnt obvoiuse how we will get the two photos also ownload_user_photo fun can
+        #handle only one photo if i get it wright
         if (caption == 'Concat'):
-            direction = filter_args[0] if  filter_args else 'horizontal'
+            direction = filter_args[0] if filter_args else 'horizontal'
             my_img.concat(my_img, direction)
 
         return my_img.save_img()
 
-#sending a welcome message for the user
+    #sending a welcome message for the user
     def greet_user(self, chat_id, first_name):
         self.send_text(chat_id, f"Welcome {first_name}! I'm ready to process your images.")
 
-#check if the user privide an image and caption and implement the filter on the picture
+    #check if the user privide an image and caption and implement the filter on the picture
     def handle_message(self, msg):
         logger.info(f'Incoming message: {msg}')
         chat_id = msg['chat']['id']
