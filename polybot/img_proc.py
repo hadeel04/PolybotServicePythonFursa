@@ -126,3 +126,24 @@ class Img:
                     self.data[i][j] = 255  # White pixel
                 else:
                     self.data[i][j] = 0  # Black pixel
+
+    def sepia(self):
+        height = len(self.data)
+        width = len(self.data[0])
+
+        for i in range(height):
+            for j in range(width):
+                r, g, b = self.data[i][j] / 255.0
+
+                # Calculate the sepia values
+                sepia_r = r * 0.393 + g * 0.769 + b * 0.189
+                sepia_g = r * 0.349 + g * 0.686 + b * 0.168
+                sepia_b = r * 0.272 + g * 0.534 + b * 0.131
+
+                # Clamp the values between 0 and 255
+                sepia_r = min(max(sepia_r, 0), 1)
+                sepia_g = min(max(sepia_g, 0), 1)
+                sepia_b = min(max(sepia_b, 0), 1)
+
+                # Assign the new sepia values to the pixel
+                self.data[i][j] = int(sepia_r * 255), int(sepia_g * 255), int(sepia_b * 255)

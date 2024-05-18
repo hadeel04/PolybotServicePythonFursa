@@ -13,6 +13,7 @@ This Telegram bot written in Python allows users to process images by applying v
   - Rotate
   - Segment
   - Salt and Pepper
+  - Sepia
   - Concat (horizontally or vertically concatenate two images)
 - Users can send an image along with a caption specifying the desired filter
 - The processed image is sent back to the user

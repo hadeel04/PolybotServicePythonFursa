@@ -101,6 +101,9 @@ class ImageProcessingBot(Bot):
             direction = filter_args[0] if filter_args else 'horizontal'
             my_img.concat(my_img, direction)
 
+        if (caption == 'Sepia'):
+            my_img.sepia()
+
         return my_img.save_img()
 
     #sending a welcome message for the user
@@ -123,7 +126,7 @@ class ImageProcessingBot(Bot):
 
                 if not caption:
                     self.send_text(chat_id,
-                                   "Please provide a caption with one of the following filters: 'Blur', 'Contour', 'Rotate', 'Segment', 'Salt and pepper', 'Concat'")
+                                   "Please provide a caption with one of the following filters: 'Blur', 'Contour', 'Rotate', 'Segment', 'Salt and pepper', 'Concat', 'Sepia'")
                     return
                 processed_img_path = self.process_image(img_path, caption)
                 self.send_photo(chat_id, processed_img_path)
