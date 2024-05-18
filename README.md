@@ -35,3 +35,38 @@ git clone https://github.com/hadeel04/PolybotServicePythonFursa
 
 2.Navigate to the project directory:
 
+```bash
+cd PolybotServicePythonFursa
+```
+
+3.Install the required dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+## Configuration
+
+1. <a href="https://desktop.telegram.org/" target="_blank">Download</a> and install Telegram Desktop (you can use your phone app as well).
+2.  Once installed, create your own Telegram Bot by following <a href="https://core.telegram.org/bots/features#botfather">this section</a> to create a bot. Once you have your telegram token you can move to the next step.
+3.  Set the environment variable `TELEGRAM_TOKEN` with your telegram bot token
+   
+```bash
+export TELEGRAM_TOKEN=your_telegram_bot_token_here
+```
+4. Sign-up for the Ngrok service
+5. then install the `ngrok` agent as [described here](https://ngrok.com/docs/getting-started/#step-2-install-the-ngrok-agent)
+6. Authenticate your ngrok agent:
+
+```bash
+ngrok config add-authtoken <your-authtoken>
+```
+7.start ngrok by running the following command:
+
+```bash
+ngrok http 8443
+```
+8. set the `TELEGRAM_APP_URL` env var to your URL ,Your bot public URL is the URL specified in the `Forwarding` line (e.g. `https://16ae-2a06-c701-4501-3a00-ecce-30e9-3e61-3069.ngrok-free.app`):
+   
+```bash
+export TELEGRAM_APP_URL=your_telegram_url_here
+```
