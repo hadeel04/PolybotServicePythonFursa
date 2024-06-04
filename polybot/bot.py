@@ -8,6 +8,7 @@ from img_proc import Img
 
 class Bot:
 
+
     def __init__(self, token, telegram_chat_url ):
         # create a new instance of the TeleBot class.
         # all communication with Telegram servers are done using self.telegram_bot_client
