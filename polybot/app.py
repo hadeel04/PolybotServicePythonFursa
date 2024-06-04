@@ -23,4 +23,4 @@ def webhook():
 
 if __name__ == "__main__":
     bot = ImageProcessingBot(TELEGRAM_TOKEN, TELEGRAM_APP_URL)
-    app.run(host='0.0.0.0', port=8443)
+    app.run(host='0.0.0.0', port=8443, ssl_context=('/home/ubuntu/ssl/bot.crt', '/home/ubuntu/ssl/bot_private.key'))

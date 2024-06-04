@@ -1,0 +1,25 @@
+# .github/workflows/prod-deploy.yaml
+name: Prod Polybot Service Deployment
+
+on:
+  push:
+    branches:
+      - Production
+
+env:
+  EC2_PUBLIC_IP: 3.144.179.22
+  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+jobs:
+  Deploy:
+    name: Deploy in EC2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the app code
+        uses: actions/checkout@v2
+      - name: SSH to EC2 instance
+        run: |
+          echo "$SSH_PRIVATE_KEY" > mykey.pem
+          chmod 400 mykey.pem
+          rsync -avz -e "ssh -i mykey.pem -o StrictHostKeyChecking=no" ./ ubuntu@$EC2_PUBLIC_IP:/home/ubuntu/prod-bot/PolybotServicePythonFursa
+          ssh -i mykey.pem -o StrictHostKeyChecking=no ubuntu@$EC2_PUBLIC_IP
