@@ -23,5 +23,6 @@ jobs:
           chmod 400 mykey.pem
           rsync -avz -e "ssh -i mykey.pem -o StrictHostKeyChecking=no" ./ ubuntu@$EC2_PUBLIC_IP:/home/ubuntu/dev-bot/PolybotServicePythonFursa
           ssh -i mykey.pem -o StrictHostKeyChecking=no ubuntu@$EC2_PUBLIC_IP << 'EOF'
+            sudo systemctl daemon-reload
             sudo systemctl restart dev-bot.service
           EOF
