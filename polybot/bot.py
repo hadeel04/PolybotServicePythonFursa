@@ -108,7 +108,7 @@ class ImageProcessingBot(Bot):
 
     #sending a welcome message for the user
     def greet_user(self, chat_id, first_name):
-        self.send_text(chat_id, f"Welcome {first_name}! I'm ready to process your images pleease give me an image.")
+        self.send_text(chat_id, f"Welcome {first_name}! I'm ready to  process your images pleease give me an image.")
 
     #check if the user privide an image and caption and implement the filter on the picture
     def handle_message(self, msg):
